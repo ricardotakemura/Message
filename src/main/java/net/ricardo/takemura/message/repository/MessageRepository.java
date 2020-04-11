@@ -1,9 +1,7 @@
 package net.ricardo.takemura.message.repository;
 
-import org.springframework.stereotype.Repository;
+import net.ricardo.takemura.message.model.Message;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-//TODO-9
-//Extenda da interface JpaRepository<Message, Long>
-@Repository
-public interface MessageRepository {
+public interface MessageRepository extends JpaRepository<Message, Long> {
 }

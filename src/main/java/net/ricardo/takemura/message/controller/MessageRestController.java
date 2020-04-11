@@ -1,24 +1,38 @@
 package net.ricardo.takemura.message.controller;
 
+import net.ricardo.takemura.message.business.MessageBusiness;
+import net.ricardo.takemura.message.business.exception.InvalidMessageException;
+import net.ricardo.takemura.message.dto.MessageDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class MessageRestController {
 
-    //TODO-21
-    //Crie uma variavel da classe MessageBusiness e
-    //adicione as anotacoes @Autowired
+    @Autowired
+    protected MessageBusiness messageBusiness;
 
-    //TODO-22
-    //Crie um metodo publico getMessages() sem parametros
-    //que retorne um objeto da classe ResponseEntity<List<MessageDTO>>
-    //usando o metodo list() da variavel da classe MessageBusiness
+    @RequestMapping(path = "message", method = RequestMethod.GET)
+    public ResponseEntity<List<MessageDTO>> getMessages() {
+        List<MessageDTO> messages = messageBusiness.listAll();
+        return new ResponseEntity<List<MessageDTO>>(messages, HttpStatus.OK);
+    }
 
-    //TODO-23
-    //- Crie um metodo publico putMessage(@RequestBody MessageDTO message)
-    //com um parametro da classe MessageDTO e
-    //que nao retorne um objeto da classe ResponseEntity<List<MessageDTO>>
-    //- Trate a excecao InvalidMessageException e
-    // retorne um objeto com a instancia ResponseEntity<List<MessageDTO>>(HttpStatus.UNPROCESSABLE_ENTITY)
-    //- Use o metodo create da variavel da classe MessageBusiness passando o parametro deste metodo
+    @RequestMapping(path = "message", method = RequestMethod.PUT)
+    public ResponseEntity<MessageDTO> putMessage(@RequestBody MessageDTO message) {
+        try {
+            messageBusiness.create(message);
+            return new ResponseEntity<MessageDTO>(message, HttpStatus.CREATED);
+        } catch (InvalidMessageException e) {
+            return new ResponseEntity<MessageDTO>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
 }

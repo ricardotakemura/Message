@@ -1,22 +1,30 @@
 package net.ricardo.takemura.message.business;
 
+import net.ricardo.takemura.message.business.exception.InvalidMessageException;
+import net.ricardo.takemura.message.dto.MessageDTO;
+import net.ricardo.takemura.message.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Component
 public class MessageBusiness {
 
-    //TODO-18
-    //Crie uma variavel da classe MessageService e
-    //adicione as anotacoes @Autowired e @Qualified (este com valor "memory")
+    @Autowired
+    @Qualifier("database")
+    private MessageService messageService;
 
-    //TODO-19
-    //Crie um metodo publico list() sem parametros que retorne uma lista de MessageDTO
-    //usando o metodo getMessages da variavel da classe MessageService
+    public List<MessageDTO> listAll() {
+        return messageService.getMessages();
+    }
 
-    //TODO-20
-    //- Crie um metodo publico create(MessageDTO message) throws InvalidMessageException
-    //com um parametro da classe MessageDTO e que nao retorna nada
-    //- Verifique se as propriedades text e sender estao preenchidas,
-    //se nao estiverem lance a excecao InvalidMessageException
-    //- Use o metodo createMessage da variavel da classe MessageService passando o parametro deste metodo
+    public void create(MessageDTO message) throws InvalidMessageException {
+        if (StringUtils.isEmpty(message.getSender()) || StringUtils.isEmpty(message.getText())) {
+            throw new InvalidMessageException();
+        }
+        messageService.createMessage(message);
+    }
 }

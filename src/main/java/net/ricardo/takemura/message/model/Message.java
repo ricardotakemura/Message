@@ -1,28 +1,39 @@
 package net.ricardo.takemura.message.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-//TODO-1
-//Adicione a anotacao @Table com o nome de MESSAGE
 @Entity
+@Table(name = "MESSAGE")
 public class Message {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "TEXT", length = 255, nullable = false)
+    private String text;
+    @Column(name = "SENDER", length = 100, nullable = false)
+    private String sender;
 
-    //TODO-2
-    //Crie a propriedade id
-    // - privada do tipo Long
-    // - com os metodos publicos get e set
-    // - adicione acima da declaracao, a anotacao @Id
-    // - adicione acima da declaracao, a anotacao @GeneratedValue com o valor AUTO_INCREMENT
+    public Long getId() {
+        return id;
+    }
 
-    //TODO-3
-    //Crie a propriedade text
-    // - privada do tipo String
-    // - com os metodos publicos get e set
-    // - adicione acima da declaracao, a anotacao @Column com o nome "TEXT", tamanho de 255 e nullable = false
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    //TODO-4
-    //Crie a propriedade sender
-    // - privada do tipo String
-    // - com os metodos publicos get e set
-    // - adicione acima da declaracao, a anotacao @Column com o nome "SENDER", tamanho de 100 e nullable = false
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
 }

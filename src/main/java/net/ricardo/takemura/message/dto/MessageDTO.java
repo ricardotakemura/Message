@@ -1,22 +1,34 @@
 package net.ricardo.takemura.message.dto;
 
+import net.ricardo.takemura.message.model.Message;
+
 public class MessageDTO {
+    private String text;
+    private String sender;
 
-    //TODO-5
-    //Crie a propriedade text
-    // - privada
-    // - com os metodos publicos get e set
+    public MessageDTO(String sender, String text) {
+        this.sender = sender;
+        this.text = text;
+    }
 
-    //TODO-6
-    //Crie a propriedade sender
-    // - privada
-    // - com os metodos publicos get e set
+    public MessageDTO() {
+        this.sender = "";
+        this.text = "";
+    }
 
-    //TODO-7
-    //Crie um construtor sem parametros inicializando
-    //as propriedades text e sender com o valor ""
+    public String getText() {
+        return text;
+    }
 
-    //TODO-8
-    //Crie um construtor com dois parametros inicializando
-    //as propriedades text e sender com os parametros passados
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
 }
